@@ -2,18 +2,19 @@
 
 import os
 import runpod
+import dotenv
 
+dotenv.load_dotenv()
 # If your handler runs inference on a model, load the model here.
 # You will want models to be loaded into memory before starting serverless.
-
 
 def handler(job):
     """ Handler function that will be used to process jobs. """
     job_input = job['input']
     name = job_input.get('name', 'World')
-    return f"You are WOW, {name}!"
+    return f"You are THE BEST <3, {name}!"
 
-if not os.environ["LOCAL"]:
+if not os.environ.get("DEV", False):
     runpod.serverless.start({"handler": handler})
 else:
     # serve this using fastapi
